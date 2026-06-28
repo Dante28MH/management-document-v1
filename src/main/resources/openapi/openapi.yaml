@@ -1,0 +1,124 @@
+openapi: 3.0.4
+info:
+  title: API Management Document v1
+  version: 1.0.0
+servers:
+  - url: http://localhost:9090
+tags:
+  - name: document
+paths:
+  /documents/upload:
+    post:
+      summary: Upload document
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Uploaded
+  /documents:
+    get:
+      summary: List documents
+      responses:
+        "200":
+          description: OK
+  /documents/{id}:
+    get:
+      summary: Get document by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    delete:
+      summary: Delete document
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+  /chat:
+    post:
+      summary: Send message (RAG query)
+      responses:
+        "200":
+          description: AI response
+  /chat/history:
+    get:
+      summary: Get chat history
+      responses:
+        "200":
+          description: OK
+  /chat/history/{sessionId}:
+    delete:
+      summary: Delete chat history
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+  /assistants:
+    post:
+      summary: Create assistant
+      responses:
+        "200":
+          description: Created
+    get:
+      summary: List assistants
+      responses:
+        "200":
+          description: OK
+  /assistants/{id}:
+    get:
+      summary: Get assistant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    delete:
+      summary: Delete assistant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+  /health:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+  /config:
+    get:
+      summary: Get system config
+      responses:
+        "200":
+          description: OK
