@@ -1,12 +1,12 @@
 FROM maven:3.9-eclipse-temurin-21 AS build
-WORKDIR /app-build
+WORKDIR /app
 
 COPY . .
 RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:21-jre
-WORKDIR /app-run
+WORKDIR /app
 
-COPY --from=build /app-build/target/quarkus-app/ .
+COPY --from=build /app/target/quarkus-app/ /app/
 
-ENTRYPOINT ["java","-jar","quarkus-run.jar"]
+ENTRYPOINT ["java","-jar","/app/quarkus-run.jar"]
